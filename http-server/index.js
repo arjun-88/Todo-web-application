@@ -55,7 +55,7 @@ http.createServer((req,res) => {
             res.end();
             break;
     }
-}).listen(3000);
+}).listen(input_arg.port || 3000);
 
 
 //home.addEventListener(show);
