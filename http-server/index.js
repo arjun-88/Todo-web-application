@@ -50,6 +50,7 @@ http.createServer((req,res) => {
         case "/registration":
             res.write(rp);
             res.end();
+            break
         default:
             res.write(hc);
             res.end();
