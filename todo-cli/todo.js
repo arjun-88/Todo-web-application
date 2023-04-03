@@ -45,7 +45,7 @@ const todoList = () => {
     // as per the format given above.
     return  list.map((item) => {
       const compstatus = item.completed ? "[x]" : "[ ]";
-      const ddate = item.duedate=== new Date().toISOString().slice(0,10) ? "" : item.dueDate;
+      const ddate = item.dueDate === new Date().toISOString().slice(0,10) ? "" : item.dueDate;
       return `${compstatus} ${item.title.trim()} ${ddate.trim()}`;
     }).join("\n");
     
