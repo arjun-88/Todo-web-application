@@ -45,26 +45,36 @@ describe("TodoList Test Suite", () => {
   });
 
   test("Should get overdue items", () => {
+    const dueitemscount = overdue.length;
     const dueitems = {
       title: "Test overdue",
       completed: false,
       dueDate: yesterday,
     };
     add(dueitems);
-    expect(overdue().length).toBe(1);
+    expect(overdue().length).toBe(dueitemscount + 1);
   });
 
   test("should get today due items", () => {
-    expect(dueToday().length).toBe(2);
+    const duetodayitemscount = dueToday().length;
+    const dueitems = {
+      title: "Test today",
+      completed: false,
+      dueDate: Dateformating(todaydate),
+    };
+    add(dueitems);
+    const todayitems = dueToday();
+    expect(todayitems.length).toBe(duetodayitemscount + 1);
   });
 
   test("Should retrieve Later due items", () => {
+    const dueitemslater = dueLater.length;
     const dueitems = {
       title: "Test dueLater",
       completed: false,
       dueDate: tomorrow,
     };
     add(dueitems);
-    expect(dueLater().length).toBe(1);
+    expect(dueLater().length).toBe(dueitemslater + 1);
   });
 });
