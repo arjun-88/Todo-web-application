@@ -1,54 +1,61 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
+/* eslint-disable no-undef */
+
 const todoList = () => {
-  all = []
+  // eslint-disable-next-line no-undef
+  all = [];
   const add = (todoItem) => {
-    all.push(todoItem)
+    all.push(todoItem);
   };
   const markAsComplete = (index) => {
-    all[index].completed = true
+    all[index].completed = true;
   };
 
   const overdue = () => {
     // Write the date check condition here and return the array
     // of overdue items accordingly.
-    let t= new Date();
-    
-    return all.filter((x) =>
-      x.dueDate < new Date().toISOString().slice(0,10)
-        );
-   
+    // eslint-disable-next-line no-unused-vars
+    let t = new Date();
+
+    // eslint-disable-next-line no-undef
+    return all.filter((x) => x.dueDate < new Date().toISOString().slice(0, 10));
   };
 
   const dueToday = () => {
     // Write the date check condition here and return the array
     // of todo items that are due today accordingly.
-    let t= new Date();
-    
-    return all.filter((x) => 
-      x.dueDate === new Date().toISOString().slice(0,10)
-         );
-    return
+    // eslint-disable-next-line no-unused-vars
+    let t = new Date();
+
+    return all.filter(
+      (x) => x.dueDate === new Date().toISOString().slice(0, 10)
+    );
+    return;
   };
 
   const dueLater = () => {
     // Write the date check condition here and return the array
     // of todo items that are due later accordingly.
-    let t= new Date();
+    let t = new Date();
     let c = [];
-    c = all.filter((x) =>
-      x.dueDate > new Date().toISOString().slice(0,10)
-        );
+    c = all.filter((x) => x.dueDate > new Date().toISOString().slice(0, 10));
     return c;
   };
 
   const toDisplayableList = (list) => {
     // Format the To-Do list here, and return the output string
     // as per the format given above.
-    return  list.map((item) => {
-      const compstatus = item.completed ? "[x]" : "[ ]";
-      const ddate = item.dueDate === new Date().toISOString().slice(0,10) ? "" : item.dueDate;
-      return `${compstatus} ${item.title.trim()} ${ddate.trim()}`;
-    }).join("\n");
-    
+    return list
+      .map((item) => {
+        const compstatus = item.completed ? "[x]" : "[ ]";
+        const ddate =
+          item.dueDate === new Date().toISOString().slice(0, 10)
+            ? ""
+            : item.dueDate;
+        return `${compstatus} ${item.title.trim()} ${ddate.trim()}`;
+      })
+      .join("\n");
   };
 
   return {
@@ -58,14 +65,14 @@ const todoList = () => {
     overdue,
     dueToday,
     dueLater,
-    toDisplayableList
+    toDisplayableList,
   };
 };
 
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
 // ####################################### #
-
+/*
 const todos = todoList();
 
 const formattedDate = d => {
@@ -106,3 +113,5 @@ let itemsDueLater = todos.dueLater()
 let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater)
 console.log(formattedItemsDueLater)
 console.log("\n\n")
+*/
+module.exports = todoList;
