@@ -1,0 +1,27 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "prepare": "cd .. && husky install todo-app/.husky"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write ."
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.7"
+  }
+}
