@@ -1,11 +1,5 @@
-const express = require("express");
-const app = express();
-
-app.get("/", function (request, response) {
-  response.send("Hello World");
-});
+const app = require("./app");
 
 app.listen(3000, () => {
-  console.log("Strted express at aport 300");
+  console.log("Started express at port 3000");
 });
-//tt
