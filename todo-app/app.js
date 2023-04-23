@@ -10,8 +10,15 @@ app.use(bodyParser.json());
 //   response.send("Hello World");
 // });
 
-app.get("/todos", (request, response) => {
-  console.log("Todo list");
+app.get("/todos", async function (_request, response) {
+  console.log("Processing list of all Todos ...");
+  try {
+    const todos = await Todo.findAll();
+    return response.send(todos);
+  } catch (error) {
+    console.log(error);
+    return response.status(422).json(error);
+  }
 });
 
 app.post("/todos", async (request, response) => {
@@ -42,8 +49,18 @@ app.put("/todos/:id/markAsCompleted", async (request, response) => {
   }
 });
 
-app.delete("/todos/:id", (request, response) => {
+app.delete("/todos/:id/delete_value", async (request, response) => {
   console.log("Delete a todo by ID:", request.params.id);
+  const todo = await Todo.findByPk(request.params.id);
+  try {
+    //const deletedTodo =
+    await todo.delete_value();
+    const k = { success: true };
+    return response.json(k);
+  } catch (error) {
+    console.log(error);
+    return response.status(422).json(error);
+  }
 });
 
 module.exports = app;
