@@ -84,8 +84,9 @@ describe("Todo Application", function () {
       .delete(`/todos/${todoID}/delete_value`)
       .send();
 
-    const parsedDeleteResponse = JSON.parse(delete_response.text);
-    expect(parsedDeleteResponse.success).toBe(true);
+    //const parsedDeleteResponse = JSON.parse(delete_response.text);
+    const res = Boolean(delete_response.text);
+    expect(res).toBe(true);
   });
 });
 

@@ -50,17 +50,9 @@ app.put("/todos/:id/markAsCompleted", async (request, response) => {
 });
 
 app.delete("/todos/:id/delete_value", async (request, response) => {
-  console.log("Delete a todo by ID:", request.params.id);
-  const todo = await Todo.findByPk(request.params.id);
-  try {
-    //const deletedTodo =
-    await todo.delete_value();
-    const k = { success: true };
-    return response.json(k);
-  } catch (error) {
-    console.log(error);
-    return response.status(422).json(error);
-  }
+  console.log("We have to delete a Todo with ID: ", request.params.id);
+  const affectedRow = await Todo.destroy({ where: { id: request.params.id } });
+  response.send(affectedRow ? true : false);
 });
 
 module.exports = app;
