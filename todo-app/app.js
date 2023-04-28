@@ -1,16 +1,35 @@
 /* eslint-disable no-unused-vars */
 const { request, response } = require("express");
 const express = require("express");
-const app = express();
-const { Todo } = require("./models");
 const bodyParser = require("body-parser");
+const app = express();
+const path = require("path");
+const { Todo } = require("./models");
+
 app.use(bodyParser.json());
 
 // app.get("/", function (request, response) {
 //   response.send("Hello World");
 // });
+app.set("view engine", "ejs");
+app.get("/", async (request, response) => {
+  const allTodos = await Todo.getTodos();
+  if (request.accepts("html")) {
+    response.render("index", {
+      allTodos,
+    });
+  } else {
+    response.json({
+      allTodos,
+    });
+  }
 
-app.get("/todos", async function (_request, response) {
+  response.render("index");
+});
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/todos", async function (request, response) {
   console.log("Processing list of all Todos ...");
   try {
     const todos = await Todo.findAll();
