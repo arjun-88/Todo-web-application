@@ -14,13 +14,26 @@ app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.get("/", async (request, response) => {
   const allTodos = await Todo.getTodos();
+  const todaytodos = await Todo.getToday();
+  //const duelatertodos = await Todo.getdueLater();
+  const overduetodos = await Todo.getOverdue();
+  const duelatertodos = await Todo.getdueLater();
+
+  // const todaytodos= await Todo.getToday();getdueLater
+
   if (request.accepts("html")) {
     response.render("index", {
       allTodos,
+      todaytodos,
+      overduetodos,
+      duelatertodos,
     });
   } else {
     response.json({
       allTodos,
+      todaytodos,
+      overduetodos,
+      duelatertodos,
     });
   }
 

@@ -2,3 +2,6 @@ body {
   color:bisque black;
   font-family: "Courier New", Courier, monospace;
 }
+.Todo-Item:hover .trash-icon{
+  display: block;
+}
