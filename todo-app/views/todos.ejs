@@ -19,7 +19,11 @@
 </table> -->
 <div class = "grid grid-cols-6">
     <div class="col-start-3 col-span-2">
-        <h5 class="text-2xl">Overdue <%= overduetodos.length %></h5>
+        <div id="count-overdue">
+        <div class="flex">
+        <h5 class="font-semibold">Overdue </h5>
+        <span><p class="ml-2"><%= overduetodos.length %></p></span>
+        </div>
         <% for (let j=0; j<overduetodos.length; j++){ %>
             <ul class="list-none">
                 <li class="Todo-Item">
@@ -36,8 +40,13 @@
                 </li>
             </ul>
         <% } %>
-        <h5 class="text-2xl">Due Today <%= todaytodos.length %></h5>
+        </div>
         
+        <div id="count-due-today">
+        <div class="flex">
+        <h5>Due Today </h5>
+        <span><p class="ml-2"><%= todaytodos.length %></p></span>
+        </div>
         <% for (let j=0; j<todaytodos.length; j++){ %>
             <ul class="list-none">
                 <li class="Todo-Item">
@@ -54,7 +63,15 @@
                 </li>
             </ul>
         <% } %>
-        <h5 class="text-2xl">Due Later <%= duelatertodos.length %></h5>
+        </div>
+
+        <div id="count-due-later">
+        <div class="flex">
+            <h5>Due Later </h5>
+            <span style="display: inline;">
+            <p class="ml-2"><%= duelatertodos.length %></p>
+            </span>
+        </div>
         
         <% for (let j=0; j<duelatertodos.length; j++){ %>
             <ul class="list-none">
@@ -72,6 +89,7 @@
                 </li>
             </ul>
         <% } %>
+        </div>
     </div>
 </div>
 
