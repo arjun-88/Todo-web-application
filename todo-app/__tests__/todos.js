@@ -132,14 +132,14 @@ describe("Todo Application", function () {
     res = await agent.get("/todos");
     csrfToken = extractCsrfToken(res);
 
-    const markCompletedResponse = await agent
+    const markCompletedResponse1 = await agent
       .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
       });
 
-    const parsedUpdateResponse = JSON.parse(markCompletedResponse.text);
-    expect(parsedUpdateResponse.completed).toBe(false);
+    const parsedUpdateResponse1 = JSON.parse(markCompletedResponse1.text);
+    expect(parsedUpdateResponse1.completed).toBe(false);
   });
 
   // test("Fetches all todos in the database using /todos endpoint", async () => {
