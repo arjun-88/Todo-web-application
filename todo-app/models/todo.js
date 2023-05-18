@@ -62,9 +62,10 @@ module.exports = (sequelize, DataTypes) => {
           dueDate: {
             [Op.gt]: new Date(),
           },
-        },
-        completed: {
-          [Op.eq]: false,
+          userId,
+          completed: {
+            [Op.eq]: false,
+          },
         },
       });
     }
