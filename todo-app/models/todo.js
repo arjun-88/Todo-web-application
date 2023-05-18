@@ -10,22 +10,31 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Todo.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
       // define association here
     }
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({
+        title: title,
+        dueDate: dueDate,
+        completed: false,
+        userId,
+      });
     }
 
     static async getTodos() {
       return this.findAll();
     }
 
-    static async getToday() {
+    static async getToday(userId) {
       return this.findAll({
         where: {
           dueDate: {
             [Op.eq]: new Date(),
           },
+          userId,
           completed: {
             [Op.eq]: false,
           },
@@ -33,12 +42,13 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async getOverdue() {
+    static async getOverdue(userId) {
       return this.findAll({
         where: {
           dueDate: {
             [Op.lt]: new Date(),
           },
+          userId,
           completed: {
             [Op.eq]: false,
           },
@@ -46,33 +56,36 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async getdueLater() {
+    static async getdueLater(userId) {
       return this.findAll({
         where: {
           dueDate: {
             [Op.gt]: new Date(),
           },
-        },
-        completed: {
-          [Op.eq]: false,
-        },
-      });
-    }
-
-    static async getcompleted() {
-      return this.findAll({
-        where: {
+          userId,
           completed: {
-            [Op.eq]: true,
+            [Op.eq]: false,
           },
         },
       });
     }
 
-    static async remove(id) {
+    static async getcompleted(userId) {
+      return this.findAll({
+        where: {
+          completed: {
+            [Op.eq]: true,
+          },
+          userId,
+        },
+      });
+    }
+
+    static async remove(id, userId) {
       return this.destroy({
         where: {
           id,
+          userId,
         },
       });
     }
@@ -89,9 +102,25 @@ module.exports = (sequelize, DataTypes) => {
 
   Todo.init(
     {
-      title: DataTypes.STRING,
-      dueDate: DataTypes.DATEONLY,
-      completed: DataTypes.BOOLEAN,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          len: 5,
+        },
+      },
+      dueDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        validate: {
+          notNull: true,
+        },
+      },
+      completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
