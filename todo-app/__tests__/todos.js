@@ -195,10 +195,10 @@ describe("Todo Application", function () {
     let res = await agent.get("/signup");
     let csrfToken = extractCsrfToken(res);
     res = await agent.post("/users").send({
-      firstName: "IPL",
-      lastName: "2023",
-      email: "ipl@ipl.com",
-      password: "ipl2023",
+      firstName: "user12L",
+      lastName: "a",
+      email: "user123@mail.com",
+      password: "user12",
       _csrf: csrfToken,
     });
 
