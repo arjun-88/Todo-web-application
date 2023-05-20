@@ -100,15 +100,15 @@ app.get(
   connectionEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     const loggedInUser = request.user.id;
-    //const allTodos = await Todo.getTodos(loggedInUser);
     const todaytodos = await Todo.getToday(loggedInUser);
     const overduetodos = await Todo.getOverdue(loggedInUser);
     const duelatertodos = await Todo.getdueLater(loggedInUser);
     const CompletedTodos = await Todo.getcompleted(loggedInUser);
+    console.log(loggedInUser);
 
     if (request.accepts("html")) {
       response.render("todos", {
-        //allTodos,
+        loggedInUser: request.user,
         todaytodos,
         overduetodos,
         duelatertodos,
@@ -117,7 +117,7 @@ app.get(
       });
     } else {
       response.json({
-        //allTodos,
+        userId: loggedInUser,
         todaytodos,
         overduetodos,
         duelatertodos,
@@ -129,6 +129,9 @@ app.get(
 );
 
 app.get("/signup", async (request, response) => {
+  if (request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
   response.render("signup", {
     title: "signup",
     csrfToken: request.csrfToken(),
@@ -164,10 +167,16 @@ app.post("/users", async (request, response) => {
     });
   } catch (error) {
     console.log(error);
+    request.flash("error", "Error! Email Already in use");
+    response.redirect("/signup");
+    //return response.status(422).json(error);
   }
 });
 
 app.get("/login", (request, response) => {
+  if (request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
   response.render("login", { title: "Login", csrfToken: request.csrfToken() });
 });
 
@@ -253,8 +262,9 @@ app.put(
   connectionEnsureLogin.ensureLoggedIn(),
   async (request, response) => {
     console.log("We have to update a todo with ID:", request.params.id);
-    const todo = await Todo.findByPk(request.params.id);
+
     try {
+      const todo = await Todo.findByPk(request.params.id);
       const updatedTodo = await todo.setCompletionStatus(todo.completed);
       return response.json(updatedTodo);
     } catch (error) {
